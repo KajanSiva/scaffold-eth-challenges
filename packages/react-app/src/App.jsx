@@ -78,8 +78,8 @@ const scaffoldEthProvider = navigator.onLine
   : null;
 const poktMainnetProvider = navigator.onLine
   ? new ethers.providers.StaticJsonRpcProvider(
-      "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406",
-    )
+    "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406",
+  )
   : null;
 const mainnetInfura = navigator.onLine
   ? new ethers.providers.StaticJsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID)
@@ -178,8 +178,8 @@ function App(props) {
     poktMainnetProvider && poktMainnetProvider._isProvider
       ? poktMainnetProvider
       : scaffoldEthProvider && scaffoldEthProvider._network
-      ? scaffoldEthProvider
-      : mainnetInfura;
+        ? scaffoldEthProvider
+        : mainnetInfura;
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
@@ -517,9 +517,13 @@ function App(props) {
   const [tokenSendToAddress, setTokenSendToAddress] = useState();
   const [tokenSendAmount, setTokenSendAmount] = useState();
 
+  // const [approvalAddress, setApprovalAddress] = useState();
+  // const [approvalAmount, setApprovalAmount] = useState();
+
   const [buying, setBuying] = useState();
 
   let transferDisplay = "";
+  // let approveDisplay = "";
   if (yourTokenBalance) {
     transferDisplay = (
       <div style={{ padding: 8, marginTop: 32, width: 420, margin: "auto" }}>
@@ -559,6 +563,43 @@ function App(props) {
         </Card>
       </div>
     );
+
+    // approveDisplay = (
+    //   <div style={{ padding: 8, marginTop: 32, width: 420, margin: "auto" }}>
+    //     <Card title="Approve">
+    //       <div>
+    //         <div style={{ padding: 8 }}>
+    //           <AddressInput
+    //             ensProvider={mainnetProvider}
+    //             placeholder="spender address"
+    //             value={approvalAddress}
+    //             onChange={setApprovalAddress}
+    //           />
+    //         </div>
+    //         <div style={{ padding: 8 }}>
+    //           <Input
+    //             style={{ textAlign: "center" }}
+    //             placeholder={"amount of tokens to approve"}
+    //             value={approvalAmount}
+    //             onChange={e => {
+    //               setApprovalAmount(e.target.value);
+    //             }}
+    //           />
+    //         </div>
+    //       </div>
+    //       <div style={{ padding: 8 }}>
+    //         <Button
+    //           type={"primary"}
+    //           onClick={() => {
+    //             tx(writeContracts.YourToken.approve(approvalAddress, ethers.utils.parseEther("" + approvalAmount)));
+    //           }}
+    //         >
+    //           Approve
+    //         </Button>
+    //       </div>
+    //     </Card>
+    //   </div>
+    // );
   }
 
   return (
@@ -600,6 +641,7 @@ function App(props) {
               </Card>
             </div>
             {transferDisplay}
+            {/* {approveDisplay} */}
             <Divider />
             <div style={{ padding: 8, marginTop: 32, width: 300, margin: "auto" }}>
               <Card title="Buy Tokens" extra={<a href="#">code</a>}>
@@ -637,7 +679,7 @@ function App(props) {
                 </div>
               </Card>
             </div>
-            {/*Extra UI for buying the tokens back from the user using "approve" and "sellTokens"
+            Extra UI for buying the tokens back from the user using "approve" and "sellTokens"
 
             <Divider />
             <div style={{ padding: 8, marginTop: 32, width: 300, margin: "auto" }}>
@@ -660,7 +702,7 @@ function App(props) {
                   />
                   <Balance balance={ethValueToSellTokens} dollarMultiplier={price} />
                 </div>
-                {isSellAmountApproved?
+                {isSellAmountApproved ?
 
                   <div style={{ padding: 8 }}>
                     <Button
@@ -694,12 +736,12 @@ function App(props) {
                         setBuying(false);
                         let resetAmount = tokenSellAmount
                         setTokenSellAmount("");
-                        setTimeout(()=>{
+                        setTimeout(() => {
                           setTokenSellAmount(resetAmount)
-                        },1500)
+                        }, 1500)
                       }}
                       disabled={!tokenSellAmount.valid}
-                      >
+                    >
                       Approve Tokens
                     </Button>
                     <Button
@@ -709,12 +751,12 @@ function App(props) {
                       Sell Tokens
                     </Button>
                   </div>
-                    }
+                }
 
 
               </Card>
             </div>
-            */}
+
             <div style={{ padding: 8, marginTop: 32 }}>
               <div>Vendor Token Balance:</div>
               <Balance balance={vendorTokenBalance} fontSize={64} />

@@ -78,8 +78,8 @@ const scaffoldEthProvider = navigator.onLine
   : null;
 const poktMainnetProvider = navigator.onLine
   ? new ethers.providers.StaticJsonRpcProvider(
-      "https://eth-mainnet.gateway.pokt.network/v1/lb/61853c567335c80036054a2b",
-    )
+    "https://eth-mainnet.gateway.pokt.network/v1/lb/61853c567335c80036054a2b",
+  )
   : null;
 const mainnetInfura = navigator.onLine
   ? new ethers.providers.StaticJsonRpcProvider(`https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`)
@@ -177,8 +177,8 @@ function App(props) {
     poktMainnetProvider && poktMainnetProvider._isProvider
       ? poktMainnetProvider
       : scaffoldEthProvider && scaffoldEthProvider._network
-      ? scaffoldEthProvider
-      : mainnetInfura;
+        ? scaffoldEthProvider
+        : mainnetInfura;
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
@@ -474,7 +474,7 @@ function App(props) {
     });
   };
 
-    /*
+
   const riggedRoll = async () => {
     tx(writeContracts.RiggedRoll.riggedRoll({ gasLimit: 500000 }), update => {
       console.log("TX UPDATE", update);
@@ -494,16 +494,16 @@ function App(props) {
     });
   };
 
-  const riggedFilter = readContracts.DiceGame?.filters.Roll(riggedRoll.address, null);
+  // const riggedFilter = readContracts.DiceGame?.filters.Roll(riggedRoll.address, null);
 
-  readContracts.DiceGame?.on(riggedFilter, (_, value) => {
-    if (value) {
-      const numberRolled = value.toNumber().toString(16).toUpperCase();
-      setDiceRollImage(numberRolled);
-      setDiceRolled(false);
-    }
-  });
-*/
+  // readContracts.DiceGame?.on(riggedFilter, (_, value) => {
+  //   if (value) {
+  //     const numberRolled = value.toNumber().toString(16).toUpperCase();
+  //     setDiceRollImage(numberRolled);
+  //     setDiceRolled(false);
+  //   }
+  // });
+
 
   const filter = readContracts.DiceGame?.filters.Roll(address, null);
 
@@ -573,24 +573,24 @@ function App(props) {
                   <Button type="primary" disabled={diceRolled} onClick={rollTheDice}>
                     Roll the dice!
                   </Button>
-                  {/*
-                  <div style={{ padding: 16 }}>
-                    <Account
-                      address={readContracts?.RiggedRoll?.address}
-                      localProvider={localProvider}
-                      userSigner={false}
-                      mainnetProvider={mainnetProvider}
-                      price={price}
-                      web3Modal={false}
-                      loadWeb3Modal={false}
-                      logoutOfWeb3Modal={false}
-                      blockExplorer={blockExplorer}
-                    />
-                    <Button style={{ margin: 16 }} type="primary" disabled={diceRolled} onClick={riggedRoll}>
-                      Rigged Roll!
-                    </Button>
-                  </div>
-                */}
+                  {
+                    <div style={{ padding: 16 }}>
+                      <Account
+                        address={readContracts?.RiggedRoll?.address}
+                        localProvider={localProvider}
+                        userSigner={false}
+                        mainnetProvider={mainnetProvider}
+                        price={price}
+                        web3Modal={false}
+                        loadWeb3Modal={false}
+                        logoutOfWeb3Modal={false}
+                        blockExplorer={blockExplorer}
+                      />
+                      <Button style={{ margin: 16 }} type="primary" disabled={diceRolled} onClick={riggedRoll}>
+                        Rigged Roll!
+                      </Button>
+                    </div>
+                  }
                 </div>
                 {diceRollImg}
               </div>
